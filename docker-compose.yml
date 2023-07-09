@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:1.25.1
+    container_name: nginx
+    restart: unless-stopped
+    volumes:
+      - ./nginx/nginx-websocket.conf:/etc/nginx/nginx.conf:ro
+      - nginx:/etc
+    ports:
+      - 8020:8020
+    networks:
+      - nginx
+  server:
+    image: node-server-websocket:test
+    build: nodejs/
+    container_name: server
+    restart: unless-stopped
+    ports:
+      - 8010:8010
+    networks:
+      - nginx
+
+networks:
+  nginx:
+    driver: bridge
+
+volumes:
+  nginx: {}
