@@ -1,14 +1,43 @@
 # nginx-websocket
-Example about Nginx Proxy Websocket
+Example about Nginx Proxy Websocket.
 
 This repository is only use case of websocket configuration on Nginx.
 
+
+## Requirements
+
+* [Docker Compose](https://docs.docker.com/compose/install/);
+* [Docker](https://docs.docker.com/engine/);
+* [wscat](https://github.com/websockets/wscat);
+
 ## Quick started
+
+This repository have two Nginx configuration files:
+
+* websocket;
+* non websocket;
+
+For use correct file choice **nginx/nginx-websocket.conf** on **docker-compose.yml**. For test and error case use **nginx/nginx.conf**.
+
+```
+version: "3.8"
+
+services:
+  nginx:
+    ...
+    volumes:
+      - ./nginx/nginx-websocket.conf:/etc/nginx/nginx.conf:ro
+```
+
+For run this example execute commands below:
 
 ```
 $ docker-compose build
 $ docker-compose up
-# Open connection with your nginx websocket
+```
+
+In new terminal, open connection with your nginx websocket:
+```
 $ wscat -c ws://localhost:8020/
 > Send anything
 ```
